@@ -1,1 +1,96 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/saga-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeflex/primeflex.css";
+
+
+:root {
+        --accent-color: #6f2c91; /* Your purple base color */
+        --background-color: #858585;
+        --text-color1: #000000;
+        --brightness-filter: 1; /* Default filter for light mode */
+      }
+    
+head{
+    margin: 0px;
+    padding: 0px;
+    height: 0px;
+}
+body {
+    margin: 0 !important;
+    padding: 0;
+    box-sizing: border-box;
+    
+    // background-image: url("/assets/images/background.jpg");
+    // background: var(--accent-color);
+}
+.dock-window {
+    width: 100%;
+    height: 60px;
+    bottom: -5px;
+
+    display:flex;
+    align-items: center;
+    padding-left: 2rem;
+    position: fixed;
+    // background-image: url('https://primefaces.org/cdn/primeng/images/dock/window.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    background-color: rgba(0, 0, 0, 0.296);
+        backdrop-filter: blur(33px);
+        // mix-blend-mode:overlay;  
+}
+.p-dock-top .p-dock-item {
+    transform-origin: center;
+    padding: 0.3rem;
+}
+.p-dock {
+    z-index: 1000;
+}
+.dock-items{
+    color: white;
+}
+
+.journal-app {
+    // max-width: 900px;
+    margin: 0;
+    // background-color: #ffffff7d;  
+    background-image: url('https://primefaces.org/cdn/primeng/images/dock/window.jpg'); 
+    position: relative;
+    // box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
+    box-sizing: border-box;
+    width: calc(100%);
+    // color: rgba(12, 12, 12, 0.214);
+    // background-blend-mode: hard-light;
+    display: flex;
+    align-items: center;
+    color: var(--text-color1);
+    h1 {
+        color: var(--accent-color);
+    }
+
+    .calendar-container,
+    .note-editor,
+    .category-manager {
+        background-color: rgba(0, 0, 0, 0.296);
+        backdrop-filter: blur(33px);
+        // mix-blend-mode:overlay;
+        // border: 1px solid var(--accent-color), 0.3;
+    }
+
+    // button {
+    //     background-color: var(--accent-color);
+    //     filter: brightness(var(--brightness-filter));
+    //     color: var(--text-color);
+    //     &:hover {
+    //         background-color: (var(--accent-color), 10%);
+    //     }
+    // }
+   
+}
+.p-dock .p-dock-link {
+    width: 3rem;
+    height: 2rem;
+    cursor: pointer;
+}
