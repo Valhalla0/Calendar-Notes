@@ -1,44 +1,44 @@
-
-<div class="journal-app flex flex-wrap align-items-stretch row p-4 shadow-3 border-round ">
-  <div class="calendar-container lg:col-6 md:col-6 sm:col-12 col-12 mb-4 p-3 shadow-2 border-round">
+<div class="title">
+  <h3 class="">Calendar Notes</h3>
+  <i (click)="toggleTheme()" class="ml-2 cursor-pointer pi pi-palette"></i>
+</div>
+<div class="journal-app gap-2 flex flex-wrap sm:flex-wrap md:flex-wrap lg:flex-nowrap shadow-3 p-4 border-round">
+  <div class="card calendar-container lg:col-6 md:col-6 sm:col-12 col-12 p-3 shadow-2 border-round ">
     <full-calendar [options]="calendarOptions"></full-calendar>
     <!-- <p-calendar 
     class="max-w-full" 
     [(ngModel)]="date" 
     [inline]="true" 
     [showWeek]="true" />  -->
-  </div> 
-
-  <div *ngIf="selectedDate" class="lg:col-6 md:col-6 sm:col-12 col-12 note-editor shadow-2 border-round p-3 mb-4 flex-grow-1">
-    <h2 class="text-secondary mt-0">Notes for {{ selectedDate }}</h2>
-    <div *ngFor="let category of categories" class="field mt-3">
-      <label class="d-block font-bold">{{ category }}:</label>
-      <textarea pInputTextarea [formControl]="noteForm[selectedDate][category]" rows="3" placeholder="Enter your notes here..."></textarea>
-    </div>
-    <button pButton label="Save Notes" class="mt-3" (click)="saveNote()" style="width: 100%;"></button>
   </div>
+  <div class="flex flex-column gap-3 lg:col-6 md:col-6 sm:col-12 col-12 border-round">
+    <div *ngIf="selectedDate" class="overflow-scroll card lg:col-12 md:col-12 sm:col-12 col-12 note-editor shadow-2 border-round p-3">
+      <span><h2 class="text-secondary mt-0">Notes for {{ selectedDate }}</h2> <button pButton label="Save Notes" class="" (click)="saveNote()"></button></span>
+      <div *ngFor="let category of categories" class="field mt-3">
+        <label [for]="category" class="d-block font-bold">{{ category }}:</label>
+          <p-editor [id]="category" [formControl]="noteForm[selectedDate][category]" />
+      </div>
+    </div>
 
-  <div class="category-manager shadow-2 lg:col-6 md:col-6 sm:col-12 col-12 border-round p-3">
-    <h2 class="text-secondary mt-0">Manage Categories</h2>
-    <div class="grid">
-      <p-floatLabel class="col-8">
+    <div class="card flex justify-content-around align-items-center category-manager row shadow-2 lg:col-12 md:col-12 sm:col-12 col-12 border-round p-4">
+      <h2 class="text-secondary m-0">Add Category</h2>
+
+      <p-floatLabel class="">
         <input [id]="newCategory" pInputText type="text" [(ngModel)]="newCategory" class="inputtext p-component" />
         <label for="newCategory">New Category</label>
       </p-floatLabel>
-      <div class="col-4">
-        <button pButton label="Add Category" (click)="addCategory()" style="width: 100%;"></button>
+      <div class="">
+        <button pButton label="+" (click)="addCategory()"></button>
       </div>
     </div>
   </div>
-  <div class="dock-window">
-    <h3 class="mb-4">Calendar Notes</h3>
-      <i (click)="toggleTheme()" class="ml-2 cursor-pointer pi pi-palette"></i>
-    <p-dock [model]="items" [position]="'bottom'">
-        <ng-template pTemplate="item" let-item>
-            <i class="dock-items" [ngClass]="item.icon" width="100%"></i>
-            <!-- <p class="mb-0">{{item.label}}</p> -->
-        </ng-template>
-    </p-dock>
-  </div>
 </div>
 
+<!-- <div class="flex relative justify-content-center align-items-center"> -->
+<p-dock class="card" [model]="items" [position]="'bottom'">
+  <ng-template pTemplate="item" let-item>
+    <i class="dock-items" [ngClass]="item.icon" width="100%"></i>
+    <!-- <p class="mb-0">{{item.label}}</p> -->
+  </ng-template>
+</p-dock>
+<!-- </div> -->

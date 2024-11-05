@@ -2,13 +2,31 @@
 @import "primeng/resources/themes/saga-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeflex/primeflex.css";
+@import "quill/dist/quill.core.css";
+@import "quill/dist/quill.snow.css";
 
+* {
+    box-sizing: border-box;
+  }
 
+/* Hide scrollbar for webkit browsers (Chrome, Safari) */
+*::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for Firefox */
+  * {
+    scrollbar-width: none; /* Firefox */
+  }
+  
 :root {
         --accent-color: #6f2c91; /* Your purple base color */
-        --background-color: #858585;
+        --background-color: #000000;
+        --card-background-color: rgba(0, 0, 0, 0.296);
         --text-color1: #000000;
-        --brightness-filter: 1; /* Default filter for light mode */
+        --brightness-filter: 1.5; /* Default filter for light mode */
+        --card-title-color: 1; /* Default filter for light mode */
+
       }
     
 head{
@@ -19,31 +37,55 @@ head{
 body {
     margin: 0 !important;
     padding: 0;
-    box-sizing: border-box;
-    
+    // box-sizing: border-box;
+    // height: 100dvh;
     // background-image: url("/assets/images/background.jpg");
-    // background: var(--accent-color);
+    background: var(--accent-color);
 }
-.dock-window {
-    width: 100%;
+@mixin card-styles {
+    background-color: var(--card-background-color);
+    filter: brightness(var(--brightness-filter));
+    backdrop-filter: blur(33px);
+    mix-blend-mode: normal;
+  }
+.title {
     height: 60px;
-    bottom: -5px;
-
     display:flex;
     align-items: center;
     padding-left: 2rem;
-    position: fixed;
+    position: relative;
     // background-image: url('https://primefaces.org/cdn/primeng/images/dock/window.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 
-    background-color: rgba(0, 0, 0, 0.296);
-        backdrop-filter: blur(33px);
+    // background-color: var(--card-background-color);
+    // backdrop-filter: blur(33px);
+        // mix-blend-mode:overlay;  
+}
+
+.dock-window {
+    // width: 100%;
+    height: 60px;
+    bottom: -5px;
+    display:flex;
+    align-items: center;
+    padding-left: 2rem;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    // background-color: var(--card-background-color);
+    // backdrop-filter: blur(33px);
         // mix-blend-mode:overlay;  
 }
 .p-dock-top .p-dock-item {
     transform-origin: center;
     padding: 0.3rem;
+}
+.p-dock-list-container{
+    @include card-styles;
+    position: fixed;
+    bottom: 5px;
 }
 .p-dock {
     z-index: 1000;
@@ -51,20 +93,38 @@ body {
 .dock-items{
     color: white;
 }
+.p-editor {
+    // position: relative;
+  }
+  .ql-editor {
+    background: var(--background-color) !important;
+    color: var(--text-color1) !important;
+  }
+  /* Toolbar Hidden by Default */
+  .p-editor-toolbar {
+    background-color: var(--background-color) !important;
+    color: var(--text-color1) !important;
+    height: 0; /* Prevents it from taking up space */
+    transform: translateY(20px); /* Slide animation effect */
+    transition: height 0.2s ease, transform 0.2s ease;
+  }
+
+  
+  /* Show Toolbar on Focus */
+  .p-editor-container:focus-within .p-editor-toolbar {
+    position: relative;
+    z-index: 1;
+    height: auto; /* Allow the height to expand */
+    transform: translateY(0); /* Slides in */  
+}
 
 .journal-app {
-    // max-width: 900px;
-    margin: 0;
-    // background-color: #ffffff7d;  
     background-image: url('https://primefaces.org/cdn/primeng/images/dock/window.jpg'); 
     position: relative;
-    // box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
     box-sizing: border-box;
-    width: calc(100%);
-    // color: rgba(12, 12, 12, 0.214);
-    // background-blend-mode: hard-light;
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
     color: var(--text-color1);
     h1 {
         color: var(--accent-color);
@@ -73,10 +133,22 @@ body {
     .calendar-container,
     .note-editor,
     .category-manager {
-        background-color: rgba(0, 0, 0, 0.296);
-        backdrop-filter: blur(33px);
+        
         // mix-blend-mode:overlay;
         // border: 1px solid var(--accent-color), 0.3;
+    }
+    .note-editor{
+        height: 32.5rem;
+    }
+    .note-editor::-webkit-scrollbar{
+        display: none;
+    }
+
+    .card{
+        background-color: var(--card-background-color);
+        filter: brightness(var(--brightness-filter));
+        backdrop-filter: blur(33px);
+        mix-blend-mode:normal;
     }
 
     // button {

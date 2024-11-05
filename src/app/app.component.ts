@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, FormsModule, FormBuilder } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { MenuItem } from 'primeng/api';
@@ -11,6 +11,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction'; 
 import { RouterOutlet } from '@angular/router';
+import { EditorModule } from 'primeng/editor';
 
 
 interface Note {
@@ -20,7 +21,7 @@ interface Note {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ReactiveFormsModule, FormsModule, FullCalendarModule, ButtonModule, CalendarModule, DockModule, RadioButtonModule, FloatLabelModule],
+  imports: [RouterOutlet, CommonModule, ReactiveFormsModule, FormsModule, FullCalendarModule, ButtonModule, CalendarModule, DockModule, RadioButtonModule, FloatLabelModule, EditorModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
   
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit {
   theme: 'light' | 'dark' = 'light'; // Initialize to 'light' theme
 //DOCK
   items: MenuItem[] = [];
+  showToolbar: FormControl = new FormControl(true);
   position: 'bottom' | 'top' | 'left' | 'right' = 'bottom';
   positionOptions = [
       {
@@ -56,11 +58,11 @@ export class AppComponent implements OnInit {
           value: 'right'
       }
   ];
+  
 
   constructor(private renderer: Renderer2){
     
   }
-
   ngOnInit(): void {
     this.initializeCalendar();
     this.items = [
@@ -81,6 +83,17 @@ export class AppComponent implements OnInit {
           icon: 'pi pi-trash'
       }
   ];
+
+    this.categories.forEach(category => {
+      this.showToolbar.valueChanges.subscribe(showToobar => {
+        console.log(showToobar)
+        if(showToobar)
+        document.documentElement.style.setProperty('class', 'display: block')
+      else
+      document.documentElement.style.setProperty('class', 'display: none')
+
+      })
+    })
   }
   loadTheme(): void {
     const themePath =
@@ -104,6 +117,7 @@ export class AppComponent implements OnInit {
   toggleTheme(): void {
     this.theme = this.theme === 'light' ? 'dark' : 'light';
     this.loadTheme();
+    this.applyTheme();
   }
   initializeCalendar(): void {
     this.calendarOptions = {
@@ -148,16 +162,16 @@ export class AppComponent implements OnInit {
     console.log('Notes saved for:', this.selectedDate, this.notes[this.selectedDate]);
   }
   applyTheme(): void {
-     if (this.theme) {
+     if (this.theme == 'dark') {
       // Adjust for dark mode
       document.documentElement.style.setProperty('--background-color', '#2b2b2b');
       document.documentElement.style.setProperty('--text-color1', '#f0f0f0');
-      document.documentElement.style.setProperty('--brightness-filter', '1.4'); // Lighter shade for dark mode
+      document.documentElement.style.setProperty('--brightness-filter', '0.9'); // Darker shade
     } else {
       // Adjust for light mode
       document.documentElement.style.setProperty('--background-color', '#ffffff');
-      document.documentElement.style.setProperty('--text-color1', '#f0f0f0');
-      document.documentElement.style.setProperty('--brightness-filter', '0.85'); // Darker shade for light mode
+      document.documentElement.style.setProperty('--text-color1', '#000000');
+      document.documentElement.style.setProperty('--brightness-filter', "1.4"); // Lighter shade
     }
   }
   
